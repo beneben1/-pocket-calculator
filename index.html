@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+    }
+
+    #numbers-continer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 150px;
+    }
+
+    #result {
+        padding: 10px;
+        font-size: 24px;
+        width: 300px;
+        border: none;
+        background-color: #fff;
+        border-radius: 10px;
+        text-align: right;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #buttons {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: repeat(4, 1fr);
+        margin: 20px auto;
+        max-width: 400px;
+    }
+
+    #buttons button {
+        padding: 10px;
+        font-size: 18px;
+        border: none;
+        background-color: #fff;
+        border-radius: 10px;
+        cursor: pointer;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.2s ease-in-out;
+    }
+
+    #buttons button:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    #buttons button:active {
+        transform: scale(0.9);
+    }
+
+    #buttons button.operator {
+        background-color: #ff7700;
+        color: #fff;
+    }
+
+    #buttons button.clear {
+        background-color: #aa0000;
+        color: #fff;
+    }
+
+    #buttons button.calculate {
+        grid-column: 3/4;
+        grid-row: 4/5;
+        background-color: #009900;
+        color: #fff;
+    }
+
+    #buttons button:nth-child(13) {
+        grid-column: 1/2;
+        grid-row: 5/6;
+    }
+
+    #buttons button:nth-child(15) {
+        grid-column: 2/3;
+        grid-row: 5/6;
+    }
+
+    #buttons button:nth-child(16) {
+        grid-column: 3/4;
+        grid-row: 5/6;
+    }
+
+    #buttons button:nth-child(17) {
+        grid-column: 4/5;
+        grid-row: 5/6;
+    }
+
+    #buttons button:nth-child(14) {
+        grid-column: 1 / 5;
+        grid-row: 4/5;
+    }
+</style>
+
+
+<body>
+    <div id="numbers-continer">
+        <input type="text" id="result">
+    </div>
+    <div id="buttons">
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>+</button>
+        <button>4</button>
+        <button>5</button>
+        <button>6</button>
+        <button>-</button>
+        <button>7</button>
+        <button>8</button>
+        <button>9</button>
+        <button>*</button>
+        <button>.</button>
+        <button>0</button>
+        <button>C</button>
+        <button>=</button>
+        <button>/</button>
+    </div>
+    <script>
+
+        // append user-input
+        function appendToScreen(char) {
+            let result = document.getElementById("result");
+            result.value += char;
+
+        }
+        // clear display
+        function clearScreen() {
+            let result = document.getElementById("result");
+            result.value = "";
+
+        }
+        // calculate the result
+        function calculate() {
+            let result = document.getElementById("result");
+            // check if the value entered in the input field is not a number
+            if (isNaN(result.value)) {
+                alert('i cant do that math!');
+                // if value is a number then evaluate
+            } else {
+                result.value = eval(result.value);
+            }
+
+
+        }
+        function calculate() {
+            const result = document.getElementById("result");
+            // Trim whitespace from input    
+            const userInput = result.value.trim();
+            // Check for empty input
+            if (!userInput) {
+                alert("Please enter a value");
+                return;
+            }
+            // check if the input has any characters other than numbers using regex
+            if (/[^0-9+\-*/(). ]/.test(userInput)) {
+                alert("Invalid input - please enter a valid mathematical expression");
+                return;
+            }
+            // Evaluate input
+            const output = eval(userInput);
+            // Check if output is undefined
+            if (typeof output === "undefined") {
+                alert("Result is undefined - please enter a valid expression");
+                return;
+            }
+            // check if the output is not finite
+            if (!Number.isFinite(output)) {
+                alert("Result is not a finite number - please enter a valid expression");
+                return;
+            }
+            // Display the result
+            result.value = output;
+        }
+
+
+        let buttons = document.getElementById("buttons");
+        let buttonValue;
+        // declare the variable outside the function
+        buttons.addEventListener("click", function (event) {
+            let target = event.target;
+            // verifies target element is a button
+            if (target.nodeName === "BUTTON") {
+                // retrieves text content of button
+                buttonValue = target.textContent;
+
+            }
+            // assign the value to the variable
+            if (buttonValue === 'C') {
+                clearScreen();
+            } else if (buttonValue === "=") {
+                calculate();
+            } else {
+                appendToScreen(buttonValue);
+            }
+        });
+
+
+
+    </script>
+
+
+</body>
+
+</html>
